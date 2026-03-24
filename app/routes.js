@@ -1,16 +1,14 @@
-//
-// For guidance on how to create routes see:
-// https://prototype-kit.service.gov.uk/docs/create-routes
-//
-
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-// Add your routes here
+router.get('/', (req, res) => {
+  res.redirect('/start')
+})
+
 router.get('/start', (req, res) => {
   req.session.data = {}
   req.session.formErrors = null
-  res.redirect('/destination')
+  res.render('start')
 })
 
 router.get('/destination', (req, res) => {
@@ -35,6 +33,14 @@ router.get('/address', (req, res) => {
   const errorList = formErrors && formErrors.page === 'address' ? formErrors.errorList : null
   req.session.formErrors = null
   res.render('address', { errors, errorList })
+})
+
+router.get('/check-answers', (req, res) => {
+  res.render('check-answers')
+})
+
+router.get('/confirmation', (req, res) => {
+  res.render('confirmation')
 })
 
 router.post('/destination', (req, res) => {
@@ -125,4 +131,8 @@ router.post('/address', (req, res) => {
   }
 
   res.redirect('/check-answers')
+})
+
+router.post('/check-answers', (req, res) => {
+  res.redirect('/confirmation')
 })
