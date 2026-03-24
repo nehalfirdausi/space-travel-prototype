@@ -1,6 +1,24 @@
 {#
-For guidance on how to use layouts see:
-https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
-#}
-
-{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+    For guidance on how to use layouts see:
+    https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+    #}
+    
+    {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+    {% from "govuk/components/header/macro.njk" import govukHeader %}
+    {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+    
+    {% block header %}
+      {{ govukHeader({
+        homepageUrl: "/",
+        serviceName: serviceName if not useServiceNavigation,
+        serviceUrl: "/" if not useServiceNavigation,
+        containerClasses: "govuk-width-container"
+      }) }}
+    
+      {% if useServiceNavigation %}
+        {{ govukServiceNavigation({
+          serviceName: serviceName,
+          serviceUrl: "/"
+        }) }}
+      {% endif %}
+    {% endblock %}

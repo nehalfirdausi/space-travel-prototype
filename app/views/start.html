@@ -1,0 +1,23 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+    Space travel service - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+  Space travel service
+</h1>
+
+<p class="govuk-body">
+  Use this service to apply for space travel.
+</p>
+
+{{ govukButton({
+  text: "Start now",
+  href: "/start",
+  isStartButton: true
+}) }}
+
+{% endblock %}

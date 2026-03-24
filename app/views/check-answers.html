@@ -1,0 +1,91 @@
+{% extends "layouts/main.html" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+Check your answers – Space travel service
+{% endblock %}
+
+{% block content %}
+
+{% set fullAddress %}
+  {{ data.addressLine1 }}<br>
+  {% if data.addressLine2 %}{{ data.addressLine2 }}<br>{% endif %}
+  {{ data.town }}<br>
+  {{ data.postcode }}
+{% endset %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      Check your answers
+    </h1>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "Destination"
+          },
+          value: {
+            text: data.destination
+          },
+          actions: {
+            items: [
+              {
+                href: "/destination",
+                text: "Change",
+                visuallyHiddenText: "destination"
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "Full name"
+          },
+          value: {
+            text: data.fullname
+          },
+          actions: {
+            items: [
+              {
+                href: "/fullname",
+                text: "Change",
+                visuallyHiddenText: "full name"
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "Address"
+          },
+          value: {
+            html: fullAddress
+          },
+          actions: {
+            items: [
+              {
+                href: "/address",
+                text: "Change",
+                visuallyHiddenText: "address"
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+
+    <form method="post" action="/confirmation">
+      {{ govukButton({
+        text: "Confirm and submit"
+      }) }}
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

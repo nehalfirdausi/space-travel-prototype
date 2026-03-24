@@ -1,0 +1,65 @@
+{% extends "layouts/main.html" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block pageTitle %}
+  {% if errors and errors.destination %}Error: {% endif %}Choose destination – Space travel service
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {{ govukBackLink({
+      text: "Back",
+      href: "/"
+    }) }}
+
+    {% if errors and errors.destination %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          {
+            text: errors.destination.text,
+            href: "#destination"
+          }
+        ]
+      }) }}
+    {% endif %}
+
+    <form method="post" action="/destination" novalidate>
+
+      {{ govukRadios({
+        name: "destination",
+        value: data.destination,
+        errorMessage: errors.destination if errors and errors.destination,
+        fieldset: {
+          legend: {
+            text: "Where would you like to travel?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "Moon",
+            text: "Moon"
+          },
+          {
+            value: "Mars",
+            text: "Mars"
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
